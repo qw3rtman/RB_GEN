@@ -15,17 +15,17 @@ LAPACK_LIBS = -llapack
 
 INC = -I./ ${LAPACK_INCDIR} ${BLAS_INCDIR} $(shell pkg-config --cflags glib-2.0)
 
-LDFLAGS = ${LAPACK_LIBDIR} ${BLAS_LIBDIR} -lm
+LDFLAGS = ${LAPACK_LIBDIR} ${BLAS_LIBDIR}
 
 LIBS = ${BLAS_LIBS} ${LAPACK_LIBS} $(shell pkg-config --libs glib-2.0)
 
 all: ${EXEC} 
 
 $(EXEC): $(OBJS) Makefile
-	$(CC) ${CFLAGS} ${LDFLAGS} $(OBJS) -o $(EXEC) ${LIBS}
+	$(CC) ${CFLAGS} ${LDFLAGS} $(OBJS) -o $(EXEC) ${LIBS} -lm
 
 %.o : %.c Makefile
-	$(CC) ${CFLAGS} ${INC} -c $< -o $@
+	$(CC) ${CFLAGS} ${INC} -c $< -o $@ -lm
 
 clean:
 	rm -f *.o *.s *.d  
